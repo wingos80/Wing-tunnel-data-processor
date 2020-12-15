@@ -2,7 +2,6 @@ import numpy as np
 import csv, os, os.path, timeit, math
 from PIL import Image
 
-windtunnel_folder = 'C:/Users/wing/Desktop/wing\'s stuff/TUD/yr 1/q4/python/coding/wind tunnel thermal data code'
 
 def summer(i, z):
     # This function produces the sum of the input arrays, with z being the input list of arrays,
@@ -51,7 +50,7 @@ def colour(temp, denoise, T_min, T_max, T_max_denoise):
     return r, g, b
 
 
-def main(index, aoa, dir2):
+def main(index, aoa, dir2, windtunnel_folder):
     # this is the main function, creates the thermal bitmap for each aoa
     dir_files = os.listdir(dir2[index])
 
@@ -135,7 +134,7 @@ def main(index, aoa, dir2):
     # File saving codes
     noisey_pic = Image.fromarray(picture_array_noisey)
     # noisey_pic.show(title = "Noisey", command = None)
-    name_noise = str(aoa) + " degrees alpha, noisey.tiff"
+    name_noise = str(aoa) + " alpha, noisey.tiff"
     noisey_pic.save(windtunnel_folder + '/thermal 3d tiff files/' + name_noise)
 
     # smoothed_pic = Image.fromarray(picture_array_smoothed)

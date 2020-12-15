@@ -16,7 +16,7 @@ for q in range(len(aoa_folders)):
 
 # running the main function over every folder under /thermal/
 for i in range(len(dir2)):
-    main(i, aoa_folders[i], dir2)
+    main(i, aoa_folders[i], dir2, windtunnel_folder)
     bak = timeit.default_timer()
     elapsed_time = bak - nik
     print("Elapsed time: ", elapsed_time, "seconds (" + str(round(elapsed_time/60, 2)) + " mins) \n\n")
