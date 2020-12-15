@@ -147,7 +147,7 @@ def main(index, aoa):
     # File saving codes
     noisey_pic = Image.fromarray(picture_array_noisey)
     # noisey_pic.show(title = "Noisey", command = None)
-    name_noise = "test" + str(aoa) + " degrees alpha, noisey.tiff"
+    name_noise = str(aoa) + " degrees alpha, noisey.tiff"
     noisey_pic.save(windtunnel_folder + '/thermal 3d tiff files/' + name_noise)
 
     # smoothed_pic = Image.fromarray(picture_array_smoothed)
