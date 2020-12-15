@@ -2,19 +2,7 @@ import numpy as np
 import csv, os, os.path, timeit, math
 from PIL import Image
 
-nik = timeit.default_timer()
-
-# Some really shit file reading code.
 windtunnel_folder = 'C:/Users/wing/Desktop/wing\'s stuff/TUD/yr 1/q4/python/coding/wind tunnel thermal data code'
-folder = windtunnel_folder + '/thermal 3d csv files/'
-aoa_folders = os.listdir(folder)
-aoa_folders.sort()
-dir2 = []
-
-# Creating a list for all the directory paths
-for q in range(len(aoa_folders)):
-    dir2.append(folder + aoa_folders[q] + "/")
-
 
 def summer(i, z):
     # This function produces the sum of the input arrays, with z being the input list of arrays,
@@ -63,7 +51,7 @@ def colour(temp, denoise, T_min, T_max, T_max_denoise):
     return r, g, b
 
 
-def main(index, aoa):
+def main(index, aoa, dir2):
     # this is the main function, creates the thermal bitmap for each aoa
     dir_files = os.listdir(dir2[index])
 
@@ -160,14 +148,3 @@ def main(index, aoa):
     print("time to generate image: ", toc - tonc, " seconds")
     print("Processing time for this batch: ", toc - tic, " seconds \n")
 
-
-# running the main function over every folder under /thermal/
-for i in range(len(dir2)):
-    main(i, aoa_folders[i])
-    bak = timeit.default_timer()
-    elapsed_time = bak - nik
-    print("Elapsed time: ", elapsed_time, "seconds (" + str(round(elapsed_time/60, 2)) + " mins) \n\n")
-
-nak = timeit.default_timer()
-time = nak - nik
-print("Total Processing time:", time, "seconds (" + str(round(time/60, 2)) + " mins) \n\n")
