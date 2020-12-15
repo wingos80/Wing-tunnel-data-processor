@@ -5,6 +5,8 @@ nik = timeit.default_timer()
 
 # Some really shit file reading code.
 windtunnel_folder = 'C:/Users/wing/Desktop/wing\'s stuff/TUD/yr 1/q4/python/coding/wind tunnel thermal data code'
+
+# folder is where your csv files that you want to read are stored
 folder = windtunnel_folder + '/thermal 3d csv files/'
 aoa_folders = os.listdir(folder)
 aoa_folders.sort()
