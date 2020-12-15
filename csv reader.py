@@ -101,39 +101,39 @@ def main(index, aoa):
     # Generating the final bitmap
     for i in range(1, len(my_data) - 3):
         for j in range(140, len(my_data[0]) - 100):
-            # Smoothing algorithms
-            # temp2 = (float(my_data[i-1][j+1]) + float(my_data[i][j+1]) + float(my_data[i+1][j+1]) + float(my_data[i+2][j+1]) +
-            #         float(my_data[i-1][j]) + float(my_data[i][j]) + float(my_data[i+1][j]) + float(my_data[i+2][j+1]) +
-            #         float(my_data[i-1][j-1]) + float(my_data[i][j-1]) + float(my_data[i+1][j-1]) + float(my_data[i+2][j+1]) +
-            #         float(my_data[i-1][j-2]) + float(my_data[i][j-2]) + float(my_data[i+1][j-2]) + float(my_data[i+2][j-2]))\
-            #         /16
-
-            temp2 = (float(my_data[i - 1][j + 1]) + float(my_data[i][j + 1]) + float(my_data[i + 1][j + 1]) +
-
-                     float(my_data[i - 1][j]) + float(my_data[i][j]) + float(my_data[i + 1][j]) +
-
-                     float(my_data[i - 1][j - 1]) + float(my_data[i][j - 1]) + float(my_data[i + 1][j - 1]) +
-
-                     float(my_data[i - 1][j - 2]) + float(my_data[i][j - 2]) + float(my_data[i + 1][j - 2]) +
-
-                     float(my_data[i - 1][j - 3]) + float(my_data[i][j - 3]) + float(my_data[i + 1][j - 3])) \
-                    / 15
-
-            # temp2 = (float(my_data[i-1][j]) + float(my_data[i][j]) + float(my_data[i][j-1])) / 3
-
-            # temp2 = float(my_data[i][j])
-
-            a = (T_max_smoothed + T_min) / 100
-
-            for k in range(100):
-                if T_min+a*k <= temp2 < T_min+a*(k+1):
-                    temp2 = float(T_min+a*k)
-
-            r2, g2, b2 = colour(temp2, 1, T_min, T_max, T_max_smoothed)
-
-            picture_array_smoothed[i][j][0] = r2
-            picture_array_smoothed[i][j][1] = g2
-            picture_array_smoothed[i][j][2] = b2
+            # # Smoothing algorithms
+            # # temp2 = (float(my_data[i-1][j+1]) + float(my_data[i][j+1]) + float(my_data[i+1][j+1]) + float(my_data[i+2][j+1]) +
+            # #         float(my_data[i-1][j]) + float(my_data[i][j]) + float(my_data[i+1][j]) + float(my_data[i+2][j+1]) +
+            # #         float(my_data[i-1][j-1]) + float(my_data[i][j-1]) + float(my_data[i+1][j-1]) + float(my_data[i+2][j+1]) +
+            # #         float(my_data[i-1][j-2]) + float(my_data[i][j-2]) + float(my_data[i+1][j-2]) + float(my_data[i+2][j-2]))\
+            # #         /16
+            #
+            # temp2 = (float(my_data[i - 1][j + 1]) + float(my_data[i][j + 1]) + float(my_data[i + 1][j + 1]) +
+            #
+            #          float(my_data[i - 1][j]) + float(my_data[i][j]) + float(my_data[i + 1][j]) +
+            #
+            #          float(my_data[i - 1][j - 1]) + float(my_data[i][j - 1]) + float(my_data[i + 1][j - 1]) +
+            #
+            #          float(my_data[i - 1][j - 2]) + float(my_data[i][j - 2]) + float(my_data[i + 1][j - 2]) +
+            #
+            #          float(my_data[i - 1][j - 3]) + float(my_data[i][j - 3]) + float(my_data[i + 1][j - 3])) \
+            #         / 15
+            #
+            # # temp2 = (float(my_data[i-1][j]) + float(my_data[i][j]) + float(my_data[i][j-1])) / 3
+            #
+            # # temp2 = float(my_data[i][j])
+            #
+            # a = (T_max_smoothed + T_min) / 100
+            #
+            # for k in range(100):
+            #     if T_min+a*k <= temp2 < T_min+a*(k+1):
+            #         temp2 = float(T_min+a*k)
+            #
+            # r2, g2, b2 = colour(temp2, 1, T_min, T_max, T_max_smoothed)
+            #
+            # picture_array_smoothed[i][j][0] = r2
+            # picture_array_smoothed[i][j][1] = g2
+            # picture_array_smoothed[i][j][2] = b2
 
             # No smoothing bitmap creation
             temp1 = float(my_data[i][j])
@@ -147,13 +147,13 @@ def main(index, aoa):
     # File saving codes
     noisey_pic = Image.fromarray(picture_array_noisey)
     # noisey_pic.show(title = "Noisey", command = None)
-    name_noise = str(aoa) + " degrees alpha, noisey.tiff"
+    name_noise = "test" + str(aoa) + " degrees alpha, noisey.tiff"
     noisey_pic.save(windtunnel_folder + '/thermal 3d tiff files/' + name_noise)
 
-    smoothed_pic = Image.fromarray(picture_array_smoothed)
-    # smoothed_pic.show(title = "Denoised", command = None)
-    name_smoothed = str(aoa) + " degrees alpha, smoothed.tiff"
-    smoothed_pic.save(windtunnel_folder + '/thermal 3d tiff files/smoothed/' + name_smoothed)
+    # smoothed_pic = Image.fromarray(picture_array_smoothed)
+    # # smoothed_pic.show(title = "Denoised", command = None)
+    # name_smoothed = str(aoa) + " degrees alpha, smoothed.tiff"
+    # smoothed_pic.save(windtunnel_folder + '/thermal 3d tiff files/smoothed/' + name_smoothed)
 
     toc = timeit.default_timer()
 
