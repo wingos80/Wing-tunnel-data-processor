@@ -150,6 +150,8 @@ def main(index, aoa, dir2, windtunnel_folder):
         temp3 = temp3 / 25
         graph_array[i-140] = temp3
 
+    plt.ylabel('Celsius')
+    plt.xlabel('Position along the width of the thermal scan section')
     plt.plot(range(len(graph_array)), graph_array)
     # plt.show()
     graph_name = str(aoa) + " temperature graph.tiff"
