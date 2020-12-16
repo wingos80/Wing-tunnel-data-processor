@@ -1,7 +1,7 @@
 import numpy as np
 import csv, os, os.path, timeit, math
 from PIL import Image
-
+import matplotlib.pyplot as plt
 
 def summer(i, z):
     # This function produces the sum of the input arrays, with z being the input list of arrays,
@@ -23,13 +23,13 @@ def summer(i, z):
         for j in range(len(a[0]) - 1):
             temp_img[k][j] = float(a[k][j])
 
-    # # recursive step
-    # if i != 1:
-    #     i -= 1
-    #     return summer(i, z) + temp_img
-    # elif i == 1:
-    #     return temp_img
-    return temp_img
+    # recursive step
+    if i != 1:
+        i -= 1
+        return summer(i, z) + temp_img
+    elif i == 1:
+        return temp_img
+    # return temp_img
 
 
 def colour(temp, denoise, T_min, T_max, T_max_denoise):
@@ -62,7 +62,7 @@ def main(index, aoa, dir2, windtunnel_folder):
 
     tic = timeit.default_timer()
 
-    my_data = summer(len(z), z)
+    my_data = summer(len(z), z)/len(z)
 
     tac = timeit.default_timer()
 
@@ -81,14 +81,17 @@ def main(index, aoa, dir2, windtunnel_folder):
 
     print("time to find max temperature: ", tonc - tac, " seconds")
 
-    # Creating arrays
+    # Creating rgb arrays
     picture_array_smoothed = np.zeros((len(my_data), len(my_data[0])-1, 3), dtype=np.uint8)
     picture_array_noisey = np.zeros((len(my_data), len(my_data[0])-1, 3), dtype=np.uint8)
+
+    # Creating array for temperature graph
+    temp_array_smoothed = np.zeros((len(my_data), len(my_data[0])), dtype=float)
 
     # Generating the final bitmap
     for i in range(1, len(my_data) - 3):
         for j in range(140, len(my_data[0]) - 100):
-            # # Smoothing algorithms
+            # # # Smoothing algorithms
             # # temp2 = (float(my_data[i-1][j+1]) + float(my_data[i][j+1]) + float(my_data[i+1][j+1]) + float(my_data[i+2][j+1]) +
             # #         float(my_data[i-1][j]) + float(my_data[i][j]) + float(my_data[i+1][j]) + float(my_data[i+2][j+1]) +
             # #         float(my_data[i-1][j-1]) + float(my_data[i][j-1]) + float(my_data[i+1][j-1]) + float(my_data[i+2][j+1]) +
@@ -115,12 +118,12 @@ def main(index, aoa, dir2, windtunnel_folder):
             # for k in range(100):
             #     if T_min+a*k <= temp2 < T_min+a*(k+1):
             #         temp2 = float(T_min+a*k)
-            #
-            # r2, g2, b2 = colour(temp2, 1, T_min, T_max, T_max_smoothed)
-            #
-            # picture_array_smoothed[i][j][0] = r2
-            # picture_array_smoothed[i][j][1] = g2
-            # picture_array_smoothed[i][j][2] = b2
+            # temp_array_smoothed[i][j] = temp2
+            # # r2, g2, b2 = colour(temp2, 1, T_min, T_max, T_max_smoothed)
+            # #
+            # # picture_array_smoothed[i][j][0] = r2
+            # # picture_array_smoothed[i][j][1] = g2
+            # # picture_array_smoothed[i][j][2] = b2
 
             # No smoothing bitmap creation
             temp1 = float(my_data[i][j])
@@ -130,6 +133,28 @@ def main(index, aoa, dir2, windtunnel_folder):
             picture_array_noisey[i][j][0] = r1
             picture_array_noisey[i][j][1] = g1
             picture_array_noisey[i][j][2] = b1
+
+    graph_array = np.zeros(len(temp_array_smoothed[0]) - 240, dtype=float)
+
+    # for i in range(140, len(my_data[0]) - 100):
+    #     temp3 = 0
+    #     for j in range(25):
+    #         temp3 += temp_array_smoothed[int(j+len(temp_array_smoothed)/2)][i]
+    #     temp3 = temp3 / 25
+    #     graph_array[i-140] = temp3
+
+    for i in range(140, len(my_data[0]) - 100):
+        temp3 = 0
+        for j in range(25):
+            temp3 += my_data[int(j+len(my_data)/2)][i]
+        temp3 = temp3 / 25
+        graph_array[i-140] = temp3
+
+    plt.plot(range(len(graph_array)), graph_array)
+    # plt.show()
+    graph_name = str(aoa) + " temperature graph.tiff"
+    plt.savefig(windtunnel_folder + '/thermal 3d tiff files/' + graph_name)
+    plt.clf()
 
     # File saving codes
     noisey_pic = Image.fromarray(picture_array_noisey)
@@ -144,6 +169,6 @@ def main(index, aoa, dir2, windtunnel_folder):
 
     toc = timeit.default_timer()
 
-    print("time to generate image: ", toc - tonc, " seconds")
+    print("time to generate image and graphs: ", toc - tonc, " seconds")
     print("Processing time for this batch: ", toc - tic, " seconds \n")
 
