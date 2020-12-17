@@ -3,6 +3,14 @@ import csv, os, os.path, timeit, math
 from PIL import Image
 import matplotlib.pyplot as plt
 
+def read_data(filepath):
+    f = open(filepath,"r")
+
+    reader = csv.reader(f, delimiter="\t", skipinitialspace = True)
+    data = list(reader)
+
+    return np.array(data)
+
 def summer(i, z):
     # This function produces the sum of the input arrays, with z being the input list of arrays,
     # and i being length of file.
